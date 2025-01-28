@@ -3,11 +3,11 @@ import subprocess
 
 TOOLS = {
     "1": ("Suricata", "sudo apt update && sudo apt install -y suricata", "suricata -h"),
-    "2": ("RITA", "sudo apt update && sudo apt install -y snapd && sudo snap install rita", "rita --help"),
-    "3": ("Cuckoo Sandbox", "sudo apt update && sudo apt install -y cuckoo", "cuckoo --help"),
+    "2": ("RITA", "wget -q https://github.com/activecm/rita/releases/download/v5.0.8/install-rita-zeek-here.sh && chmod +x install-rita-zeek-here.sh && ./install-rita-zeek-here.sh", "rita --help"),
+    "3": ("Cuckoo Sandbox", "pip download cuckoo && pip install *.tar.gz", "cuckoo --help"),
     "4": ("Wireshark", "sudo apt update && sudo apt install -y wireshark", "wireshark -h"),
-    "5": ("Zui", "sudo apt update && sudo apt install -y npm && sudo npm install -g zui", "zui -h"),
-    "6": ("Zeek", "echo 'deb http://download.opensuse.org/repositories/security:/zeek/xUbuntu_22.04/ /' | sudo tee /etc/apt/sources.list.d/security:zeek.list && curl -fsSL https://download.opensuse.org/repositories/security:zeek/xUbuntu_22.04/Release.key | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/security_zeek.gpg > /dev/null && sudo apt update && sudo apt install -y zeek", "zeek --help"),
+    "5": ("Zui", "wget -q https://github.com/brimdata/zui/releases/download/v1.18.0/zui_1.18.0_amd64.deb && sudo dpkg -i zui_1.18.0_amd64.deb && rm zui_1.18.0_amd64.deb", "zui -h"),
+    "6": ("Zeek", "echo 'deb http://download.opensuse.org/repositories/security:/zeek/xUbuntu_24.04/ /' | sudo tee /etc/apt/sources.list.d/security:zeek.list && curl -fsSL https://download.opensuse.org/repositories/security:zeek/xUbuntu_24.04/Release.key | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/security_zeek.gpg > /dev/null && sudo apt update && sudo apt install -y zeek", "zeek --help"),
     "7": ("NetworkMiner & Mono", "sudo apt update && sudo apt install -y mono-complete && wget -q -O networkminer.zip https://www.netresec.com/?download=NetworkMiner && unzip networkminer.zip -d /opt/networkminer && rm networkminer.zip", "mono /opt/networkminer/NetworkMiner.exe"),
     "8": ("nfdump", "sudo apt update && sudo apt install -y nfdump", "nfdump -h"),
     "9": ("PassiveDNS", "sudo apt update && sudo apt install -y passivedns", "passivedns -h"),
@@ -16,8 +16,8 @@ TOOLS = {
 
 INSTALL_PATHS = {
     "Suricata": "/usr/bin/suricata",
-    "RITA": "/snap/bin/rita",
-    "Cuckoo Sandbox": "/usr/bin/cuckoo",
+    "RITA": "/usr/local/bin/rita",
+    "Cuckoo Sandbox": "/usr/local/bin/cuckoo",
     "Wireshark": "/usr/bin/wireshark",
     "Zui": "/usr/bin/zui",
     "Zeek": "/usr/bin/zeek",
