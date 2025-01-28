@@ -7,7 +7,7 @@ TOOLS = {
     "3": ("Cuckoo Sandbox", "sudo apt update && sudo apt install -y cuckoo", "cuckoo --help"),
     "4": ("Wireshark", "sudo apt update && sudo apt install -y wireshark", "wireshark -h"),
     "5": ("Zui", "sudo apt update && sudo apt install -y npm && sudo npm install -g zui", "zui -h"),
-    "6": ("Zeek", "sudo apt update && sudo apt install -y zeek", "zeek --help"),
+    "6": ("Zeek", "echo 'deb http://download.opensuse.org/repositories/security:/zeek/xUbuntu_22.04/ /' | sudo tee /etc/apt/sources.list.d/security:zeek.list && curl -fsSL https://download.opensuse.org/repositories/security:zeek/xUbuntu_22.04/Release.key | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/security_zeek.gpg > /dev/null && sudo apt update && sudo apt install -y zeek", "zeek --help"),
     "7": ("NetworkMiner & Mono", "sudo apt update && sudo apt install -y mono-complete && wget -q -O networkminer.zip https://www.netresec.com/?download=NetworkMiner && unzip networkminer.zip -d /opt/networkminer && rm networkminer.zip", "mono /opt/networkminer/NetworkMiner.exe"),
     "8": ("nfdump", "sudo apt update && sudo apt install -y nfdump", "nfdump -h"),
     "9": ("PassiveDNS", "sudo apt update && sudo apt install -y passivedns", "passivedns -h"),
@@ -40,6 +40,14 @@ def install_tool(name, command):
     except subprocess.CalledProcessError:
         print(f"Error: Failed to install {name}.\n")
 
+def install_all_tools():
+    """Install all tools sequentially."""
+    for key, (name, command, _) in TOOLS.items():
+        if is_installed(INSTALL_PATHS[name]):
+            print(f"{name} is already installed.")
+        else:
+            install_tool(name, command)
+
 def show_help():
     """Display help information for the tools."""
     print("\nAvailable Tools and How to Use Them:")
@@ -66,15 +74,11 @@ def main():
             print("Exiting...")
             break
 
-        elif choice == "A":
-            for key, (name, command, _) in TOOLS.items():
-                if is_installed(INSTALL_PATHS[name]):
-                    print(f"{name} is already installed.")
-                else:
-                    install_tool(name, command)
-
         elif choice == "H":
             show_help()
+
+        elif choice == "A":
+            install_all_tools()
 
         elif choice in TOOLS:
             name, command, _ = TOOLS[choice]
