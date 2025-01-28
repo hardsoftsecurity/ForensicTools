@@ -4,14 +4,13 @@ import subprocess
 TOOLS = {
     "1": ("Suricata", "sudo apt update && sudo apt install -y suricata", "suricata -h"),
     "2": ("RITA", "wget -q https://github.com/activecm/rita/releases/download/v5.0.8/install-rita-zeek-here.sh && chmod +x install-rita-zeek-here.sh && ./install-rita-zeek-here.sh", "rita --help"),
-    "3": ("Cuckoo Sandbox", "pip download cuckoo && pip install *.tar.gz", "cuckoo --help"),
+    "3": ("Cuckoo Sandbox", "sudo apt update && sudo apt install -y python2.7 python-pip && wget -q https://bootstrap.pypa.io/pip/2.7/get-pip.py -O get-pip.py && python2.7 get-pip.py && pip2.7 download cuckoo && pip2.7 install *.tar.gz", "cuckoo --help"),
     "4": ("Wireshark", "sudo apt update && sudo apt install -y wireshark", "wireshark -h"),
     "5": ("Zui", "wget -q https://github.com/brimdata/zui/releases/download/v1.18.0/zui_1.18.0_amd64.deb && sudo dpkg -i zui_1.18.0_amd64.deb && rm zui_1.18.0_amd64.deb", "zui -h"),
-    "6": ("Zeek", "echo 'deb http://download.opensuse.org/repositories/security:/zeek/xUbuntu_24.04/ /' | sudo tee /etc/apt/sources.list.d/security:zeek.list && curl -fsSL https://download.opensuse.org/repositories/security:zeek/xUbuntu_24.04/Release.key | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/security_zeek.gpg > /dev/null && sudo apt update && sudo apt install -y zeek", "zeek --help"),
-    "7": ("NetworkMiner & Mono", "sudo gpg --homedir /tmp --no-default-keyring --keyring /usr/share/keyrings/mono-official-archive-keyring.gpg --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 3FA7E0328081BFF6A14DA29AA6A19B38D3D831EF && echo 'deb [signed-by=/usr/share/keyrings/mono-official-archive-keyring.gpg] https://download.mono-project.com/repo/ubuntu stable-focal main' | sudo tee /etc/apt/sources.list.d/mono-official-stable.list && sudo apt update && sudo apt install mono-devel -y && apt clean && rm -rf /var/lib/apt/lists/* && wget -q -O networkminer.zip https://www.netresec.com/?download=NetworkMiner && unzip networkminer.zip -d /opt/networkminer && rm networkminer.zip", "mono /opt/networkminer/NetworkMiner.exe"),
+    "6": ("Zeek", "echo 'deb http://download.opensuse.org/repositories/security:/zeek/xUbuntu_22.04/ /' | sudo tee /etc/apt/sources.list.d/security:zeek.list && curl -fsSL https://download.opensuse.org/repositories/security:zeek/xUbuntu_22.04/Release.key | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/security_zeek.gpg > /dev/null && sudo apt update && sudo apt install -y zeek", "zeek --help"),
+    "7": ("NetworkMiner & Mono", "sudo gpg --homedir /tmp --no-default-keyring --keyring /usr/share/keyrings/mono-official-archive-keyring.gpg --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 3FA7E0328081BFF6A14DA29AA6A19B38D3D831EF && echo 'deb [signed-by=/usr/share/keyrings/mono-official-archive-keyring.gpg] https://download.mono-project.com/repo/ubuntu stable-focal main' | sudo tee /etc/apt/sources.list.d/mono-official-stable.list && sudo apt update && sudo apt install mono-devel -y && apt clean && rm -rf /var/lib/apt/lists/* && mkdir -p /opt/networkminer && wget -q https://www.netresec.com/?download=NetworkMiner -O /tmp/networkminer.zip && unzip /tmp/networkminer.zip -d /opt/networkminer && rm /tmp/networkminer.zip", "mono /opt/networkminer/NetworkMiner.exe"),
     "8": ("nfdump", "sudo apt update && sudo apt install -y nfdump", "nfdump -h"),
-    "9": ("PassiveDNS", "sudo apt update && sudo apt install -y passivedns", "passivedns -h"),
-    "10": ("Volatility", "sudo apt update && sudo apt install -y volatility", "volatility -h"),
+    "9": ("Volatility", "mkdir -p /opt/volatility && wget -q https://github.com/volatilityfoundation/volatility/releases/download/2.6.1/volatility_2.6_lin64_standalone.zip -O /tmp/volatility.zip && unzip /tmp/volatility.zip -d /opt/volatility && rm /tmp/volatility.zip", "/opt/volatility/volatility_2.6_lin64_standalone/volatility_2.6_lin64_standalone -h")
 }
 
 INSTALL_PATHS = {
@@ -21,10 +20,9 @@ INSTALL_PATHS = {
     "Wireshark": "/usr/bin/wireshark",
     "Zui": "/usr/bin/zui",
     "Zeek": "/usr/bin/zeek",
-    "NetworkMiner": "/opt/networkminer/NetworkMiner.exe",
+    "NetworkMiner & Mono": "/opt/networkminer/NetworkMiner.exe",
     "nfdump": "/usr/bin/nfdump",
-    "PassiveDNS": "/usr/bin/passivedns",
-    "Volatility": "/usr/bin/volatility",
+    "Volatility": "/usr/bin/volatility"
 }
 
 def is_installed(tool_path):
